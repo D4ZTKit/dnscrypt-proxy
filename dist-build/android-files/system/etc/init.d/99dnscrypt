@@ -1,19 +1,6 @@
 #!/system/bin/sh
-#
-# Added random rotation if the first (dnscrypt.org-fr) is not responding or caused the error
-#
-# 
-array=(`grep -o "^[^,]*" /system/etc/dnscrypt-proxy/dnscrypt-resolvers.csv`)          
-
 
 while :; do
-        #random rotation
-        #
-        totalstr=$((${#array[@]} - 1)) 
-        randomnum=$(($(($RANDOM % $totalstr)) + 0))
-        # Test echo
-        
-        #
 #check first server
         RESOLVER_NAME=dnscrypt.org-fr
         dnscrypt-proxy \
@@ -24,11 +11,9 @@ while :; do
                 0 ) break;;
         esac
         sleep 1
-        
-        echo "***[INFO] RANDOM SERVER SELECTED :  ${array[$randomnum]}"
 
 # check second server (servers go down pretty often)
-        RESOLVER_NAME="${array[$randomnum]}"
+        RESOLVER_NAME=random
         dnscrypt-proxy \
         --resolver-name="$RESOLVER_NAME" \
         --resolvers-list=/system/etc/dnscrypt-proxy/dnscrypt-resolvers.csv \
