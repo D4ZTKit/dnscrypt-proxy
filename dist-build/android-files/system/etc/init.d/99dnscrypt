@@ -4,6 +4,7 @@ while :; do
 # check first server
         RESOLVER_NAME=dnscrypt.org-fr
         dnscrypt-proxy \
+        --pidfile=/data/local/tmp/dnscrypt-proxy.pid \
         --resolver-name="$RESOLVER_NAME" \
         --resolvers-list=/system/etc/dnscrypt-proxy/dnscrypt-resolvers.csv \
         --test=700
